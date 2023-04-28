@@ -51,10 +51,10 @@ async def create_egg(egg: ModelEgg):
 async def get_egg(registration: str):
     egg = db[EGG_COLLECTION].find_one({"registration": registration})
     return egg_parser(egg) | {
-        "weight": extract_weight(egg["registration"]),
-        "country": extract_country(egg["registration"]),
-        "day": extract_day(egg["registration"]),
-        "month": extract_month(egg["registration"]),
+        "weight": extract_weight(registration),
+        "country": extract_country(registration),
+        "day": extract_day(registration),
+        "month": extract_month(registration),
     }
 
 
