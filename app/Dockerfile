@@ -1,6 +1,6 @@
 FROM python:3.10-alpine
 
-RUN pip install --no-cache-dir uvicorn pymongo fastapi
+RUN pip install --no-cache-dir --upgrade uvicorn pymongo fastapi pydantic
 
 COPY model_egg.py /
 
