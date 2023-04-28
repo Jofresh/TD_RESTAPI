@@ -2,12 +2,18 @@ from fastapi import FastAPI, HTTPException
 from pymongo import MongoClient
 
 from model_egg import ModelEgg
-from immat_parser import egg_parser
+from immat_parser import (
+    egg_parser,
+    extract_day,
+    extract_country,
+    extract_month,
+    extract_weight,
+)
 
-MONGODB_URL = "mongodb:27017"
+MONGODB_URL = "mongodb"
 DB_NAME = "warehouse"
 
-client = MongoClient("mongodb://localhost:27017")
+client = MongoClient(MONGODB_URL)
 db = client[DB_NAME]
 
 EGG_COLLECTION = "egg"
@@ -18,7 +24,16 @@ app = FastAPI()
 @app.get("/eggs")
 async def find_eggs():
     eggs = db[EGG_COLLECTION].find()
-    return [egg_parser(egg) for egg in eggs]
+    return [
+        egg_parser(egg)
+        | {
+            "weight": extract_weight(egg["registration"]),
+            "country": extract_country(egg["registration"]),
+            "day": extract_day(egg["registration"]),
+            "month": extract_month(egg["registration"]),
+        }
+        for egg in eggs
+    ]
 
 
 @app.post("/eggs")
