@@ -29,11 +29,11 @@
 	CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "3000"]
 
 # Lancement app
-	docker container run --name app_c -p 3000:3000 --link mongodb:mongodb app
+	docker container run -it --name app_c -p 3000:3000 --link mongodb:mongodb app
 
 	# On peut aller sur localhost:3000 et voir l'api !
 
 ### Dans l'ordre (sans network) :
 	docker container run -d --name mongodb mongo
 	docker container run --name seed_mongo_c --link mongodb:mongodb seed_mongo
-	docker container run --name app_c -p 3000:3000 --link mongodb:mongodb app
+	docker container run -it --name app_c -p 3000:3000 --link mongodb:mongodb app
