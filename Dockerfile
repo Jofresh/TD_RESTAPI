@@ -1,12 +1,12 @@
 FROM python:3.10-alpine
 
-RUN pip install --no-cache-dir --upgrade uvicorn pymongo fastapi pydantic
+RUN pip install --no-cache-dir uvicorn pymongo fastapi
 
-COPY model_egg.py ./model_egg.py
+COPY model_egg.py /
 
-COPY immat_parser.py ./immat_parser.py
+COPY immat_parser.py /
 
-COPY app.py ./app.py
+COPY app.py /
 
 EXPOSE 3000
 

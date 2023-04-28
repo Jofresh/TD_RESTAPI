@@ -3,7 +3,7 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 # Database information
-MONGO_CLIENT = "mongodb:27017"
+MONGO_CLIENT = "mongodb"
 DB_NAME = "warehouse"
 EGG_COL = "egg"
 client = MongoClient(MONGO_CLIENT)
