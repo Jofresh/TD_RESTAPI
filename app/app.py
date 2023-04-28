@@ -29,6 +29,14 @@ async def find_eggs():
 
 @app.post("/eggs")
 async def create_egg(egg: ModelEgg):
+    weight = extract_weight(egg.registration)
+    day = extract_day(egg.registration)
+    if weight < 60 or day % 2 == 0:
+        raise HTTPException(
+            status_code=422,
+            detail="Egg weight must be more than 60g and day cannot be even.",
+        )
+
     e = db[EGG_COLLECTION].find_one({"registration": egg.registration})
     if e:
         raise HTTPException(
