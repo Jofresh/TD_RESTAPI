@@ -7,7 +7,7 @@ def egg_parser(egg) -> dict:
 
 
 def extract_weight(registration: str):
-    return registration[:2]
+    return int(registration[:2])
 
 
 def extract_country(registration: str):
@@ -15,7 +15,7 @@ def extract_country(registration: str):
 
 
 def extract_day(registration: str):
-    return registration[8:10]
+    return int(registration[8:10])
 
 
 def extract_month(registration: str):
