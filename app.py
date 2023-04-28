@@ -24,16 +24,7 @@ app = FastAPI()
 @app.get("/eggs")
 async def find_eggs():
     eggs = db[EGG_COLLECTION].find()
-    return [
-        egg_parser(egg)
-        | {
-            "weight": extract_weight(egg["registration"]),
-            "country": extract_country(egg["registration"]),
-            "day": extract_day(egg["registration"]),
-            "month": extract_month(egg["registration"]),
-        }
-        for egg in eggs
-    ]
+    return [egg_parser(egg) for egg in eggs]
 
 
 @app.post("/eggs")
@@ -51,7 +42,12 @@ async def create_egg(egg: ModelEgg):
 @app.get("/eggs/immatriculation/{registration}")
 async def get_egg(registration: str):
     egg = db[EGG_COLLECTION].find_one({"registration": registration})
-    return egg_parser(egg)
+    return egg_parser(egg) | {
+        "weight": extract_weight(egg["registration"]),
+        "country": extract_country(egg["registration"]),
+        "day": extract_day(egg["registration"]),
+        "month": extract_month(egg["registration"]),
+    }
 
 
 @app.put("/eggs/immatriculation/{registration}")
